@@ -12,7 +12,6 @@
     "build": "roadhog build",
     "test": "roadhog test",
     "lint": "eslint --ext .js src test",
-    "precommit": "npm run lint"
   },
   "repository": {
     "type": "git",
