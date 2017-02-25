@@ -1,0 +1,17 @@
+{
+  "entry": "src/entres/index.js",
+  "disableCSSModules": false,
+  "outputPath": "./dist",
+  "publicPath": "/",
+  "extraBabelPlugins": [
+    "transform-runtime",
+    ["import", { "libraryName": "antd", "style": true }]
+  ],
+  "env": {
+    "development": {
+      "extraBabelPlugins": [
+        "dva-hmr"
+      ]
+    }
+  }
+}
