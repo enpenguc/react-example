@@ -1,23 +1,32 @@
-{
-  "extends": "eslint-config-airbnb",
-  "parser": "babel-eslint",
-  "rules": {
-    "spaced-comment": [0],
-    "no-unused-vars": [0],
-    "no-empty": [0],
-    "react/wrap-multilines": [0],
-    "react/no-multi-comp": [0],
-    "no-constant-condition": [0],
-    "react/jsx-no-bind": [0],
-    "react/prop-types": [0],
-    "arrow-body-style": [0],
-    "react/prefer-stateless-function": [0],
-    "semi": [0],
-    "comma-dangle":["error", "never"],
-    "no-useless-constructor":[0],
-    "no-useless-computed-key":[0]
-  },
-  "ecmaFeatures": {
-    "experimentalObjectRestSpread": true
-  }
-}
+---
+extends: airbnb
+parser: babel-eslint
+env:
+  browser: true
+  node: true
+rules:
+  spaced-comment: off
+  no-unused-vars: off
+  no-empty: off
+  react/wrap-multilines: off
+  react/no-multi-comp: off
+  no-constant-condition: off
+  react/jsx-no-bind: off
+  react/prop-types: off
+  arrow-body-style: off
+  react/prefer-stateless-function: off
+  semi: off
+  no-param-reassign:
+  - error
+  - props: false
+  comma-dangle:
+  - error
+  - never
+  no-useless-constructor: off
+  no-useless-computed-key: off
+  react/jsx-closing-bracket-location:
+  - 1
+  - selfClosing: after-props
+    nonEmpty: after-props
+ecmaFeatures:
+  experimentalObjectRestSpread: true

@@ -1,5 +1,5 @@
-import xFetch from '../util/xFetch';
 import qs from 'qs';
+import xFetch from '../util/xFetch';
 
 /**
  * 查询用户列表

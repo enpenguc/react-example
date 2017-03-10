@@ -1,5 +1,5 @@
 {
-  "entry": "src/entres/index.js",
+  "entry": "src/entries/index.js",
   "disableCSSModules": false,
   "outputPath": "./dist",
   "publicPath": "/",

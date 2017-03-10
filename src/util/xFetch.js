@@ -3,8 +3,9 @@
 // https://travis-ci.org/matthew-andrews/isomorphic-fetch
 import fetch from 'isomorphic-fetch';
 import cookie from 'js-cookie';
+import qs from 'qs';
 
-const errorMessages = (res) => `${res.status} ${res.statusText}`;
+const errorMessages = res => `${res.status} ${res.statusText}`;
 
 function check401(res) {
   if (res.status === 401) {
@@ -21,16 +22,14 @@ function check404(res) {
 }
 
 function jsonParse(res) {
-  return res.json().then(jsonResult => ({...res,
-    jsonResult
-  }));
+  return res.json().then(result => ({ ...res, result }));
 }
 
 function errorMessageParse(res) {
   const {
     success,
     message
-  } = res.jsonResult;
+  } = res.result;
   if (!success) {
     return Promise.reject(message);
   }
@@ -38,8 +37,7 @@ function errorMessageParse(res) {
 }
 
 function xFetch(url, options) {
-  const opts = {...options
-  };
+  const opts = { ...options };
   opts.headers = {
     ...opts.headers,
     authorization: cookie.get('authorization') || ''
@@ -51,5 +49,16 @@ function xFetch(url, options) {
     .then(jsonParse)
     .then(errorMessageParse);
 }
+
+export const get = (url, params) => {
+  return xFetch(`${url}?${qs.stringify(params)}`);
+};
+
+export const post = (url, params) => {
+  return xFetch('/api/services/add', {
+    method: 'POST',
+    body: qs.stringify(params)
+  });
+};
 
 export default xFetch;

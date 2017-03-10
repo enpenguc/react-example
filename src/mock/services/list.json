@@ -1,0 +1,56 @@
+{
+  "data": [{
+      "id": 12121,
+      "name": "服务名称是是是",
+      "type": "type_01",
+      "desc": "描述描述描述描述",
+      "gmtCreaate": 1489067266112,
+      "gmtModified": 1489067266112,
+      "cid": "264118",
+      "cname": "张三",
+      "status": "INITIALIZE"
+    },{
+      "id": 12122,
+      "name": "服务名称是是是22",
+      "type": "type_01",
+      "desc": "描述描述描述描述",
+      "gmtCreaate": 1489067202365,
+      "gmtModified": 1489067266112,
+      "cid": "264118",
+      "cname": "张三",
+      "status": "INITIALIZE"
+    },{
+      "id": 12123,
+      "name": "服务名称是是是33",
+      "type": "type_01",
+      "desc": "描述描述描述描述",
+      "gmtCreaate": 1489067031555,
+      "gmtModified": 1489067266112,
+      "cid": "264117",
+      "cname": "李艾",
+      "status": "INITIALIZE"
+    },{
+      "id": 12124,
+      "name": "服务名称是是是44",
+      "type": "type_01",
+      "desc": "描述描述描述描述",
+      "gmtCreaate": 1489067268264,
+      "gmtModified": 1489067266112,
+      "cid": "264118",
+      "cname": "张三",
+      "status": "INITIALIZE"
+    },{
+      "id": 12125,
+      "name": "服务名称是是是55",
+      "type": "type_01",
+      "desc": "描述描述描述描述55",
+      "gmtCreaate": 1489067212544,
+      "gmtModified": 1489067266112,
+      "cid": "264118",
+      "cname": "张三",
+      "status": "INITIALIZE"
+    }
+  ],
+  "total": 56,
+  "success": true
+}

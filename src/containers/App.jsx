@@ -1,27 +1,24 @@
 import React, { Component, PropTypes } from 'react'
-import { Router, Route, IndexRoute, Link } from 'react-router';
-
+import { Router, Link } from 'dva/router';
+import MainLayout from '../layout/MainLayout'
 
 class App extends Component {
   constructor(props) {
-    super(props)
+    super(props);
   }
   render() {
     const { children } = this.props
     return (
-      <div>
-        <h2>APP</h2>
-        <Link to="home">首页</Link>&emsp;&emsp;
-        <Link to="services">用户列表</Link>
+      <MainLayout>
         {children}
-      </div>
+      </MainLayout>
     )
   }
 }
 
 App.propTypes = {
   // Injected by React Router
-  children: PropTypes.node
+  children: PropTypes.node // eslint-disable-line
 }
 
 export default App;

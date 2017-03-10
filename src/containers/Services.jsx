@@ -1,8 +1,7 @@
-import React, {Component} from "react";
-import {Input, Button, Table} from "antd";
-import {connect} from 'react-redux'
-import {services as actions} from '../store/actions'
-import AddModal from '../components/services/AddModal';
+import React, { Component } from 'react';
+import { Input, Button, Table } from 'antd';
+import { connect } from 'dva'
+// import AddModal from '../components/services/AddModal';
 
 class Services extends Component {
   constructor(props) {
@@ -11,6 +10,9 @@ class Services extends Component {
       visible: false,
       editRecord: null
     }
+  }
+  componentDidMount() {
+    this.props.queryList();
   }
   // 添加
   handleSaveService = (data) => {
@@ -23,17 +25,13 @@ class Services extends Component {
   }
   // 修改
   handleEdit = (record) => {
-    this.setState({editRecord: record});
-    this.showModal();
   }
   handleRemove(id) {
     this.props.delService(id);
   }
   showModal = () => {
-    this.setState({visible: true});
   }
   hideModal = () => {
-    this.setState({visible: false, editRecord: null});
   }
   checkServiceNameExists = (rule, value, callback) => {
     if (!value) {
@@ -56,8 +54,8 @@ class Services extends Component {
     return services.some(item => item.name === name);
   }
   render() {
-    const {data, loading} = this.props;
-    const dataSource = data.services;
+    const { list, loading } = this.props;
+    const dataSource = list.items;
 
     const columns = [
       {
@@ -94,23 +92,32 @@ class Services extends Component {
       onCancelClick: this.hideModal,
       checkServiceNameExists: this.checkServiceNameExists
     }
-    const elemAddModal = this.state.visible
-      ? <AddModal {...modalProps}/>
-      : <div></div>;
     return (
       <div>
         <h3>服务列表</h3>
-        <Table dataSource={dataSource} columns={columns}/>
+        <Table dataSource={dataSource} columns={columns} />
         <Button type="primary" onClick={this.showModal}>添加服务</Button>
-        {elemAddModal}
       </div>
     )
   }
 }
 
 function mapStateToProps(state, ownProps) {
-  return {data: state.services}
+  return {
+    list: state.services.list,
+    loading: !!state.loading.models.services
+  }
 }
+function dispatchToProps(dispatch) {
+  return {
+    queryList(payload = {}) {
+      dispatch({
+        type: 'services/queryList',
+        payload
+      })
+    }
+  }
+}
+
 // 包装 component ，注入 dispatch 和 state 到其默认的 connect(select)(App) 中；
-export default connect(mapStateToProps, {...actions})(Services);
-// export default connect(mapStateToProps, {getServices, addService, updateService, delService})(Services);
+export default connect(mapStateToProps, dispatchToProps)(Services);
