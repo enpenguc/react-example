@@ -38,20 +38,20 @@ class MainLayout extends Component {
             </Menu.Item>
             <Menu.Item key="3">
               <Link to="services">
-                <Icon type="video-camera" />
+                <Icon type="video-camera" />size
                 <span className="nav-text">服务列表</span>
               </Link>
             </Menu.Item>
           </Menu>
         </Sider>
         <Layout>
-          <Header style={{ background: '#fff', padding: 0 }}>
+          <Header>
             <Icon
               className="trigger"
               type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
               onClick={this.toggle} />
           </Header>
-          <Content style={{ margin: '24px 16px', padding: 24, background: '#fff', minHeight: 280 }}>
+          <Content>
             {children}
           </Content>
         </Layout>

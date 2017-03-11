@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { Router, Link } from 'dva/router';
 import MainLayout from '../layout/MainLayout'
+import '../styles'
 
 class App extends Component {
   constructor(props) {

@@ -24,6 +24,7 @@ rules:
   - never
   no-useless-constructor: off
   no-useless-computed-key: off
+  jsx-a11y/no-static-element-interactions: warn
   react/jsx-closing-bracket-location:
   - 1
   - selfClosing: after-props

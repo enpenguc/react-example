@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Input, Button, Table } from 'antd';
 import { connect } from 'dva'
+import { withRouter } from 'dva/router'
+import qs from 'qs';
 // import AddModal from '../components/services/AddModal';
 
 class Services extends Component {
@@ -12,9 +14,17 @@ class Services extends Component {
     }
   }
   componentDidMount() {
-    this.props.queryList();
+    this.queryList();
   }
-  // 添加
+  componentWillReceiveProps(props) {
+    if (this.props.location.query !== props.location.query) {
+      this.queryList({ ...props.location.query });
+    }
+  }
+  queryList = (query = this.props.location.query) => {
+    this.props.queryList({ ...query });
+  }
+  //
   handleSaveService = (data) => {
     if (data.id) {
       this.props.updateService(data);
@@ -53,10 +63,17 @@ class Services extends Component {
     }
     return services.some(item => item.name === name);
   }
+  changeQuery = (params) => {
+    const { pathname, query } = this.props.location;
+    const q = {
+      ...query,
+      ...params
+    }
+    this.context.router.push(`${pathname}?${qs.stringify(q)}`)
+  }
   render() {
     const { list, loading } = this.props;
-    const dataSource = list.items;
-
+    const { page, size, key } = this.props.location.query;
     const columns = [
       {
         title: '服务名称',
@@ -77,7 +94,7 @@ class Services extends Component {
         width: 100,
         render: (text, record, index) => {
           return (
-            <div>
+            <div className="dm-table-operation">
               <a onClick={this.handleEdit.bind(this, record)}>修改</a>
               <a onClick={this.handleRemove.bind(this, record.id)}>删除</a>
             </div>
@@ -86,21 +103,40 @@ class Services extends Component {
       }
     ];
 
-    const modalProps = {
-      data: this.state.editRecord,
-      onOkClick: this.handleSaveService,
-      onCancelClick: this.hideModal,
-      checkServiceNameExists: this.checkServiceNameExists
-    }
+    // const modalProps = {
+    //   data: this.state.editRecord,
+    //   onOkClick: this.handleSaveService,
+    //   onCancelClick: this.hideModal,
+    //   checkServiceNameExists: this.checkServiceNameExists
+    // }
+    const pagination = {
+      current: parseInt(list.page, 10),
+      total: list.total,
+      pageSize: parseInt(size, 10),
+      showSizeChanger: true,
+      onShowSizeChange: (pageIndex, pageSize) => {
+        // console.log(this.props, this.context.router);
+        this.changeQuery({ page: 1, size: pageSize });
+        // this.props.queryList({ size });
+      },
+      onChange: (pageIndex) => {
+        this.changeQuery({ page: pageIndex });
+        // this.props.queryList({ page });
+      }
+    };
+
     return (
       <div>
         <h3>服务列表</h3>
-        <Table dataSource={dataSource} columns={columns} />
         <Button type="primary" onClick={this.showModal}>添加服务</Button>
+        <Table dataSource={list.items} columns={columns} rowKey="id" pagination={pagination} />
       </div>
     )
   }
 }
+Services.contextTypes = {
+  router: React.PropTypes.object
+};
 
 function mapStateToProps(state, ownProps) {
   return {
@@ -108,6 +144,7 @@ function mapStateToProps(state, ownProps) {
     loading: !!state.loading.models.services
   }
 }
+
 function dispatchToProps(dispatch) {
   return {
     queryList(payload = {}) {
@@ -120,4 +157,4 @@ function dispatchToProps(dispatch) {
 }
 
 // 包装 component ，注入 dispatch 和 state 到其默认的 connect(select)(App) 中；
-export default connect(mapStateToProps, dispatchToProps)(Services);
+export default connect(mapStateToProps, dispatchToProps)(withRouter(Services));
