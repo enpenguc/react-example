@@ -24,12 +24,12 @@ export default {
   },
   effects: {
     * queryList({ payload: { page, size, key } }, { call, put }) {
-      const { result } = yield call(service.query, { page, size, key });
+      const { jsonResult } = yield call(service.query, { page, size, key });
       yield put({
         type: 'queryListSuccess',
         payload: {
-          items: result.data,
-          total: result.total,
+          items: jsonResult.data,
+          total: jsonResult.total,
           page,
           key
         }

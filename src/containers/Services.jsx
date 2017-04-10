@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Input, Button, Table } from 'antd';
+import { Input, Button, Table, Popconfirm } from 'antd';
 import { connect } from 'dva'
 import { withRouter } from 'dva/router'
 import qs from 'qs';
@@ -94,9 +94,11 @@ class Services extends Component {
         width: 100,
         render: (text, record, index) => {
           return (
-            <div className="dm-table-operation">
+            <div className="rcb-table-operation">
               <a onClick={this.handleEdit.bind(this, record)}>修改</a>
-              <a onClick={this.handleRemove.bind(this, record.id)}>删除</a>
+              <Popconfirm title="确定要删除此服务吗?" onConfirm={this.handleRemove.bind(this, record.id)}>
+                <a>删除</a>
+              </Popconfirm>
             </div>
           );
         }
@@ -125,10 +127,12 @@ class Services extends Component {
       }
     };
 
+    // <h3>服务列表</h3>
     return (
       <div>
-        <h3>服务列表</h3>
-        <Button type="primary" onClick={this.showModal}>添加服务</Button>
+        <div className="rcb-line">
+          <Button type="primary" onClick={this.showModal}>添加服务</Button>
+        </div>
         <Table dataSource={list.items} columns={columns} rowKey="id" pagination={pagination} />
       </div>
     )

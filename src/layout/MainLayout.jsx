@@ -4,10 +4,12 @@ import { Router, Link } from 'dva/router';
 import styles from './MainLayout.less';
 
 const { Header, Sider, Content } = Layout;
+const reg = /^\/(\w+[^/])/;
 
 class MainLayout extends Component {
   state = {
-    collapsed: false
+    collapsed: false,
+    defaultSelectedKeys: 'home'
   };
   toggle = () => {
     this.setState({
@@ -15,7 +17,11 @@ class MainLayout extends Component {
     });
   }
   render() {
-    const { children } = this.props;
+    const { children, location } = this.props;
+    let keys = this.state.defaultSelectedKeys;
+    if (location.pathname && reg.test(location.pathname)) {
+      keys = reg.exec(location.pathname)[1];
+    }
     return (
       <Layout className={styles.layout}>
         <Sider
@@ -23,22 +29,25 @@ class MainLayout extends Component {
           collapsible
           collapsed={this.state.collapsed}>
           <div className="logo" />
-          <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
-            <Menu.Item key="1">
+          <Menu
+            theme="dark"
+            mode="inline"
+            selectedKeys={[keys]}>
+            <Menu.Item key="home">
               <Link to="home">
                 <Icon type="pie-chart" />
                 <span className="nav-text">工作台</span>
               </Link>
             </Menu.Item>
-            <Menu.Item key="2">
+            <Menu.Item key="users">
               <Link to="users">
                 <Icon type="user" />
                 <span className="nav-text">用户管理</span>
               </Link>
             </Menu.Item>
-            <Menu.Item key="3">
+            <Menu.Item key="services">
               <Link to="services">
-                <Icon type="video-camera" />size
+                <Icon type="video-camera" />
                 <span className="nav-text">服务列表</span>
               </Link>
             </Menu.Item>

@@ -8,9 +8,9 @@ class App extends Component {
     super(props);
   }
   render() {
-    const { children } = this.props
+    const { children, location } = this.props
     return (
-      <MainLayout>
+      <MainLayout location={location}>
         {children}
       </MainLayout>
     )
