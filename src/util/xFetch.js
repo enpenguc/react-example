@@ -77,7 +77,7 @@ function xFetch(url2, options) {
     headers: {
       ...(options ? options.headers : {}),
       'Upgrade-Insecure-Requests': '1',
-      'Access-Control-Allow-Origin': 'https://login-test.alibaba-inc.com/ssoLogin.htm',
+      'Access-Control-Allow-Origin': 'https://localhost/ssoLogin.htm',
       authorization: cookie.get('authorization') || ''
     }
   };
